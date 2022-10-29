@@ -57,9 +57,10 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64,linux/arm64
-          cache-to: docker.pkg.github.com/${{ github.repository }}/go-ipam:cache
-          cache-from: docker.pkg.github.com/${{ github.repository }}/go-ipam:cache
+          platforms: linux/amd64
+#          ,linux/arm64
+#          cache-to: docker.pkg.github.com/${{ github.repository }}/go-ipam:cache
+#          cache-from: docker.pkg.github.com/${{ github.repository }}/go-ipam:cache
           network: host
 
       - name: Get tag
