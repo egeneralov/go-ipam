@@ -10,6 +10,8 @@ RUN apk add \
 
 WORKDIR /work
 COPY --from=buf /usr/local/bin/buf /usr/local/bin/buf
+ADD go.mod go.sum ./
+RUN go mod download -x
 COPY . .
 RUN make server client
 
