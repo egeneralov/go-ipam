@@ -19,7 +19,21 @@ jobs:
       
       - name: Checkout code
         uses: actions/checkout@master
-      
+
+      - name: Cache Primes
+        id: cache-primes
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: go modules
+        run: go mod download -x
+
       - name: build linux-server-amd64-server
         run: GOOS=linux GOARCH="amd64" go build -a -v -installsuffix cgo -ldflags="-w -s" -o go-ipam-linux-server-amd64 cmd/server/*.go
       
