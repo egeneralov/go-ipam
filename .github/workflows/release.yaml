@@ -75,7 +75,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           cache-to: ghcr.io/${{ github.repository }}/go-ipam:cache
           cache-from: ghcr.io/${{ github.repository }}/go-ipam:cache
           network: host
