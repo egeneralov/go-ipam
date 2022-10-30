@@ -240,6 +240,9 @@ func main() {
               if err != nil {
                 return err
               }
+              if len(json) == 0 {
+                return nil
+              }
               _, err = c.Load(context.Background(), connect.NewRequest(&v1.LoadRequest{
                 Dump: string(json),
               }))
