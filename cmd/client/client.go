@@ -204,13 +204,25 @@ func main() {
           {
             Name:  "create",
             Usage: "create a json file of the whole ipam db for backup purpose",
+            Flags: []cli.Flag{
+              &cli.StringFlag{
+                Name: "file",
+              },
+            },
             Action: func(ctx *cli.Context) error {
               c := client(ctx)
               result, err := c.Dump(context.Background(), connect.NewRequest(&v1.DumpRequest{}))
               if err != nil {
                 return err
               }
-              fmt.Println(result.Msg.Dump)
+              file, err := os.OpenFile(ctx.String("file"), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0755)
+              if err != nil {
+                return err
+              }
+              defer file.Close()
+              if _, err = file.WriteString(result.Msg.Dump); err != nil {
+                return err
+              }
               return nil
             },
           },
